@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   /* config options here */
-  reactCompiler: true,
-  
+  // reactCompiler: true, // Disabled — causes HMR rebuild loop with babel-plugin-react-compiler@1.0.0 + React 19
+
   // Production optimizations
   poweredByHeader: false, // Remove X-Powered-By header
-  
+
   // Image optimization configuration
   images: {
     // Allow common image hosting domains
@@ -25,7 +25,7 @@ const nextConfig = {
     // Cache optimized images for 1 year - prevents reload on refresh
     minimumCacheTTL: 31536000,
   },
-  
+
   // Security headers (additional headers in vercel.json)
   async headers() {
     return [

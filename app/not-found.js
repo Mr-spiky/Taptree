@@ -2,57 +2,43 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 flex items-center justify-center px-4">
-      <div className="text-center animate-fade-in max-w-md">
-        {/* Illustration */}
-        <div className="relative w-32 h-32 mx-auto mb-8">
-          <div className="absolute inset-0 bg-emerald-100 rounded-full animate-pulse" />
-          <div className="relative w-full h-full bg-white rounded-full flex items-center justify-center shadow-lg">
-            <svg
-              className="w-16 h-16 text-emerald-500"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <div className="text-center animate-fade-in-up max-w-md">
+        <div className="brutal-card-static p-10 relative overflow-hidden">
+          <div className="strip-yellow h-2 rounded-t-[9px] -mx-10 -mt-10 mb-8" style={{ marginLeft: "-2.5rem", marginRight: "-2.5rem", marginTop: "-2.5rem", borderTopLeftRadius: "9px", borderTopRightRadius: "9px" }} />
+
+          {/* Big 404 */}
+          <div className="text-8xl font-black text-brutal-black mb-2 tracking-tighter">
+            404
           </div>
+
+          <h1 className="text-2xl font-black text-brutal-black mb-3">
+            Page not found
+          </h1>
+          <p className="text-brutal-gray font-medium mb-8 leading-relaxed">
+            We couldn&apos;t find the page you&apos;re looking for.
+            It might have been moved, or the link might be incorrect.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link
+              href="/"
+              className="brutal-btn brutal-btn-yellow px-6 py-3 text-sm hover-wobble"
+            >
+              Go Home
+            </Link>
+            <Link
+              href="/generate"
+              className="brutal-btn brutal-btn-outline px-6 py-3 text-sm hover-wobble"
+            >
+              Create a Taptree
+            </Link>
+          </div>
+
+          <p className="mt-10 text-xs font-bold text-brutal-gray uppercase tracking-widest">
+            Taptree — Your links, beautifully organized
+          </p>
         </div>
-
-        {/* Message */}
-        <h1 className="text-3xl font-bold text-gray-900 mb-3">
-          Oops! Page not found
-        </h1>
-        <p className="text-gray-500 mb-8 leading-relaxed">
-          We couldn&apos;t find the page you&apos;re looking for. 
-          It might have been moved, or the link might be incorrect.
-        </p>
-
-        {/* Actions */}
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Link
-            href="/"
-            className="btn-primary px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-xl transition-all"
-          >
-            Go Home
-          </Link>
-          <Link
-            href="/generate"
-            className="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-xl transition-all"
-          >
-            Create a Taptree
-          </Link>
-        </div>
-
-        {/* Subtle branding */}
-        <p className="mt-12 text-xs text-gray-400">
-          Taptree — Your links, beautifully organized
-        </p>
       </div>
     </div>
   );

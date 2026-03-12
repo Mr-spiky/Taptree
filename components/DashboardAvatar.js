@@ -11,8 +11,8 @@ const DashboardAvatar = memo(function DashboardAvatar({ src, handle, linkCount }
   return (
     <div className="relative">
       {hasError || !src ? (
-        <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center ring-2 ring-gray-100 group-hover:ring-emerald-100 transition-all duration-200">
-          <span className="text-lg font-bold text-emerald-600">{initial}</span>
+        <div className="w-12 h-12 rounded-xl bg-brutal-yellow border-[2px] border-brutal-border flex items-center justify-center shadow-[2px_2px_0px_0px_#1a1a1a]">
+          <span className="text-lg font-black text-brutal-black">{initial}</span>
         </div>
       ) : (
         <Image
@@ -20,12 +20,12 @@ const DashboardAvatar = memo(function DashboardAvatar({ src, handle, linkCount }
           alt={handle}
           width={48}
           height={48}
-          className="rounded-full object-cover ring-2 ring-gray-100 group-hover:ring-emerald-100 transition-all duration-200"
+          className="rounded-xl object-cover border-[2px] border-brutal-border shadow-[2px_2px_0px_0px_#1a1a1a]"
           onError={() => setHasError(true)}
           loading="lazy"
         />
       )}
-      <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 rounded-full flex items-center justify-center text-white text-xs font-medium shadow-sm">
+      <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-brutal-green border-[1.5px] border-brutal-border rounded-full flex items-center justify-center text-brutal-black text-xs font-black shadow-sm">
         {linkCount}
       </div>
     </div>

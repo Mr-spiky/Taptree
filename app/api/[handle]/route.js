@@ -70,12 +70,21 @@ export async function PUT(request, { params }) {
     }
 
     // Sanitize and validate links (filter out invalid URLs)
+    // Preserve existing click counts for links that haven't changed
+    const existingLinks = taptree.link || [];
     const sanitizedLinks = link
       .filter((l) => l.link && l.linktext && isValidUrl(l.link))
-      .map((l) => ({
-        link: sanitizeText(l.link.trim(), 2000),
-        linktext: sanitizeText(l.linktext, 100),
-      }));
+      .map((l) => {
+        // Try to find matching existing link to preserve its click count
+        const existing = existingLinks.find(
+          (e) => e.link === l.link.trim() && e.linktext === l.linktext
+        );
+        return {
+          link: sanitizeText(l.link.trim(), 2000),
+          linktext: sanitizeText(l.linktext, 100),
+          clicks: existing ? (existing.clicks || 0) : 0,
+        };
+      });
 
     if (sanitizedLinks.length === 0) {
       return Response.json({

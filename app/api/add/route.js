@@ -1,11 +1,11 @@
 
 import clientPromise from "@/lib/mongodb";
 import { auth } from "@/lib/auth";
-import { 
-  isValidUrl, 
-  isValidImageUrl, 
-  sanitizeText, 
-  validateHandle 
+import {
+  isValidUrl,
+  isValidImageUrl,
+  sanitizeText,
+  validateHandle
 } from "@/lib/security";
 
 export async function POST(request) {
@@ -16,6 +16,7 @@ export async function POST(request) {
       return Response.json({
         success: false,
         error: true,
+        errorCode: "AUTH_REQUIRED",
         message: "You must be logged in to create a Taptree",
         result: null,
       }, { status: 401 });
@@ -32,6 +33,7 @@ export async function POST(request) {
       return Response.json({
         success: false,
         error: true,
+        errorCode: "INVALID_HANDLE",
         message: handleValidation.error,
         result: null,
       }, { status: 400 });
@@ -43,6 +45,7 @@ export async function POST(request) {
       return Response.json({
         success: false,
         error: true,
+        errorCode: "MISSING_FIELD",
         message: "At least one link is required",
         result: null,
       }, { status: 400 });
@@ -52,6 +55,7 @@ export async function POST(request) {
       return Response.json({
         success: false,
         error: true,
+        errorCode: "MISSING_FIELD",
         message: "Profile picture URL is required",
         result: null,
       }, { status: 400 });
@@ -62,6 +66,7 @@ export async function POST(request) {
       return Response.json({
         success: false,
         error: true,
+        errorCode: "INVALID_IMAGE",
         message: "Please enter a valid image URL (http or https)",
         result: null,
       }, { status: 400 });
@@ -71,6 +76,7 @@ export async function POST(request) {
       return Response.json({
         success: false,
         error: true,
+        errorCode: "MISSING_FIELD",
         message: "Bio/description is required",
         result: null,
       }, { status: 400 });
@@ -87,6 +93,7 @@ export async function POST(request) {
       return Response.json({
         success: false,
         error: true,
+        errorCode: "HANDLE_TAKEN",
         message: "This handle is already taken. Please choose another one.",
         result: null,
       }, { status: 409 });
@@ -98,12 +105,14 @@ export async function POST(request) {
       .map((l) => ({
         link: sanitizeText(l.link.trim(), 2000),
         linktext: sanitizeText(l.linktext, 100),
+        clicks: 0,
       }));
 
     if (sanitizedLinks.length === 0) {
       return Response.json({
         success: false,
         error: true,
+        errorCode: "INVALID_URL",
         message: "Please add at least one valid link (http or https URLs only)",
         result: null,
       }, { status: 400 });
@@ -116,6 +125,7 @@ export async function POST(request) {
       pic: sanitizeText(pic.trim(), 2000),
       desc: sanitizeText(desc.trim(), 500),
       userId: session.user.id, // Link to user
+      totalClicks: 0,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -134,6 +144,7 @@ export async function POST(request) {
     return Response.json({
       success: false,
       error: true,
+      errorCode: "NETWORK_ERROR",
       message: "Something went wrong. Please try again later.",
       result: null,
     }, { status: 500 });
